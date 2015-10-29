@@ -445,8 +445,8 @@ gulp.task('watch', () => {
   gulp.watch(`${settings.src}styles/**/*.scss`, ['styles']);
 
   // Watch app .js files
-  gulp.watch(`${settings.src}'js/app/**/*.js`, ['scripts-app']);
-
+  gulp.watch(`${settings.src}js/app/**/*.js`, ['scripts-app']);
+gutil.log(`${settings.src}'js/app/**/*.js`);
   // Watch vendor .js files
   gulp.watch(`${settings.src}js/vendor/**/*.js`, ['scripts-vendor']);
 
