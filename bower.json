@@ -1,0 +1,36 @@
+{
+  "name": "screeps",
+  "description": "screeps.com",
+  "main": [
+    "src/js/app/app.js",
+    "src/styles/main.scss"
+  ],
+  "dependencies": {
+   
+  },
+  "devDependencies": {},
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "motion",
+    "physics",
+    "particles"
+  ],
+  "authors": [
+    "Elger van Boxtel <elgervb@gmail.com>"
+  ],
+  "homepage": "http://elgervanboxtel.nl",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elgervb/screeps/"
+  },
+  "license": "ISC",
+  "ignore": [
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
