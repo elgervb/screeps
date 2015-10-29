@@ -50,8 +50,8 @@ module.exports = function () {
 
   for (var role in creeps) {
     if (mustGenerate(creeps[role], role)) {
-      console.log('Spawn creep ' + role);
       if (creeps[role] && typeof creeps[role].create === 'function') {
+        console.log('Spawn creep ' + role);
         creeps[role].create();
         return; // done
       }
