@@ -11,7 +11,7 @@ module.exports = function () {
   // Generate these creeps
   var creeps = {
     harvester: {
-      desired: 1,
+      desired: 4,
       create: function create() {
         Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, { role: 'harvester' });
       }
