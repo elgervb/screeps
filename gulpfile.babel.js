@@ -226,19 +226,21 @@ gulp.task('lint-js', () => {
  * Minifies all javascript found in the `src/js/**` folder. All files will be concatenated into `app.js`.  Minified and non-minified versions are copied to the dist folder.
  * This will also generete sourcemaps for the minified version. Depends on: docs-js
  */
-gulp.task('scripts-app', ['docs-js'], () => {
+gulp.task('scripts-app', ['lint-js', 'docs-js'], () => {
   let ngannotate = require('gulp-ng-annotate');
   let stripDebug = require('gulp-strip-debug');
   let sourcemaps = require('gulp-sourcemaps');
   let uglify = require('gulp-uglify');
+  let babel = require('gulp-babel');
 
   return gulp.src(`${settings.src}js/app/**/*.js`)
   .pipe(plumber())
+  .pipe(babel())
   .pipe(ngannotate({gulpWarnings: false}))
-  .pipe(concat('app.js'))
   .pipe(gulp.dest(`${settings.dist}js`))
   
   // make minified
+  .pipe(concat('app.js'))
   .pipe(rename({suffix: '.min'}))
   .pipe(gulpif(!argv.dev, stripDebug()))
   .pipe(sourcemaps.init())
@@ -446,7 +448,7 @@ gulp.task('watch', () => {
 
   // Watch app .js files
   gulp.watch(`${settings.src}js/app/**/*.js`, ['scripts-app']);
-gutil.log(`${settings.src}'js/app/**/*.js`);
+
   // Watch vendor .js files
   gulp.watch(`${settings.src}js/vendor/**/*.js`, ['scripts-vendor']);
 
