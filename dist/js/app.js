@@ -1,36 +1,63 @@
-/**
- * Declaration of the main skeleton app
+/* global Game, ERR_NOT_IN_RANGE, FIND_CONSTRUCTION_SITES, FIND_HOSTILE_CREEPS */
+var harvester = require('harvester');
+
+module.exports.loop = function () {
+
+	for(var name in Game.creeps) {
+		var creep = Game.creeps[name];
+
+		if(creep.memory.role == 'harvester') {
+			harvester(creep);
+		}
+
+		if(creep.memory.role == 'builder') {
+		
+			if(creep.carry.energy == 0) {
+				if(Game.spawns.Spawn1.transferEnergy(creep) == ERR_NOT_IN_RANGE) {
+					creep.moveTo(Game.spawns.Spawn1);				
+				}
+			}
+			else {
+				var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
+				if(targets.length) {
+					if(creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
+						creep.moveTo(targets[0]);					
+					}
+				}
+			}
+		}
+		
+		if(creep.memory.role == 'guard') {
+        	var targets = creep.room.find(FIND_HOSTILE_CREEPS);
+        	if (targets.length) {
+        		if(creep.attack(targets[0]) == ERR_NOT_IN_RANGE) {
+        			creep.moveTo(targets[0]);		
+        		}
+        	}
+        }
+	}
+}
+/* global Game */
+/* global ERR_NOT_IN_RANGE */
+/* global FIND_SOURCES */
+/*
+ * Module code goes here. Use 'module.exports' to export things:
+ * module.exports = 'a thing';
+ *
+ * You can import it from another modules like this:
+ * var mod = require('harvester'); // -> 'a thing'
  */
-var app = angular.module('skeleton', ['ngRoute'])
+ module.exports = function (creep) {
 
-/**
- * Configuration: state your routes and other configuration items here
- */
-.config(["$routeProvider", "$locationProvider", function($routeProvider, $locationProvider) {
-  
-  $routeProvider
-    .otherwise({
-      controller: 'MainController',
-      templateUrl: '/js/app/modules/main/main.html'
-    });
-
-  $locationProvider.html5Mode('true');
-
-}]);
-
-/* global app */
-/**
- * Main controller
- */
-angular.module('skeleton').controller('MainController', ['$scope', function($scope) {
-
-  $scope.divider = '+';
-  
-  /**
-   * Change the divider between Gulp and AngularJS
-   */
-  $scope.changeDivider = function(divider) {
-    $scope.divider = divider;
-  };
-
-}]);
+	if(creep.carry.energy < creep.carryCapacity) {
+		var sources = creep.room.find(FIND_SOURCES);
+		if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
+			creep.moveTo(sources[0]);
+		}
+	}
+	else {
+		if(creep.transferEnergy(Game.spawns.Spawn1) == ERR_NOT_IN_RANGE) {
+			creep.moveTo(Game.spawns.Spawn1);
+		}			
+	}
+};
