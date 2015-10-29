@@ -3,9 +3,12 @@
 
 module.exports = function (creep) {
 
-  // only build when having more than 200 energy
-  if (Game.spawns.Spawn1.energy < 201 || !!Game.spawns.Spawn1.spawning) {
-    return;
+  // only build when having more than ... energy
+  if (Game.spawns.Spawn1.energy <= 275 || !!Game.spawns.Spawn1.spawning) {
+    if (creep.carry.energy === 0) {
+      // let creep finish his energy first
+      return;
+    }
   }
 
   // collect energy
