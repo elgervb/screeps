@@ -46,7 +46,6 @@ Temporary Items
 .sublime-gulp.cache
 .vscode/launch.json
 npm-debug.log
-dist/
 docs/*
 node_modules/*
 reports/*
