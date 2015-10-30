@@ -1,4 +1,4 @@
-/* global Game, FIND_HOSTILE_CREEPS, ERR_NOT_IN_RANGE */
+/* global Game, FIND_HOSTILE_CREEPS, ERR_NOT_IN_RANGE, FIND_DROPPED_ENERGY */
 module.exports = (creep) => {
   // let targets = creep.room.find(FIND_HOSTILE_CREEPS);
   let targets = creep.pos.findInRange(FIND_HOSTILE_CREEPS, 15);
@@ -7,7 +7,21 @@ module.exports = (creep) => {
       creep.moveTo(targets[0]);
     }
   } else {
-    if (Game.flags.Flag1){
+    // pickup energy dropped from enemies
+    let target = creep.pos.findClosestByRange(FIND_DROPPED_ENERGY);
+    if (target) {
+      if (creep.pickup(target) === ERR_NOT_IN_RANGE) {
+        creep.moveTo(target);
+      }
+    }
+    // bring the energy back home
+    else if (creep.carry.energy) {
+      if (creep.transferEnergy(Game.spawns.Spawn1) === ERR_NOT_IN_RANGE) {
+        creep.moveTo(Game.spawns.Spawn1);
+      }
+    }
+    // move to flag and wait
+    else if (Game.flags.Flag1) {
       creep.moveTo(Game.flags.Flag1);
     }
   }

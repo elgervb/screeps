@@ -9,22 +9,17 @@ module.exports = () => {
   // Generate these creeps
   let creeps = {
     harvester: {
-      desired: 4,
-      max: 6,
-      body: [MOVE, WORK, CARRY]
-    },
-    builder: {
       desired: 2,
-      max: 2,
+      max: 5,
       body: [MOVE, WORK, CARRY]
     },
     guard: {
-      desired: 6,
+      desired: 2,
       max: 12,
       body: [MOVE, WORK, CARRY, ATTACK]
     },
     ranger: {
-      desired: 4,
+      desired: 2,
       max: 6,
       body: [MOVE, RANGED_ATTACK]
     },
@@ -33,6 +28,11 @@ module.exports = () => {
       max: 4,
       body: [MOVE, HEAL]
     },
+    builder: {
+      desired: 2,
+      max: 2,
+      body: [MOVE, WORK, CARRY]
+    },
     test: {
       desired: 0,
       max: 1,
@@ -40,7 +40,7 @@ module.exports = () => {
     }
   };
   
-  function mustGenerate(maxNumber, role) {
+  function canGenerate(maxNumber, role) {
     let active = 0;
     
     // collect roles
@@ -65,11 +65,9 @@ module.exports = () => {
   
   // create desired amount of creeps
   for (let role in creeps) {
-    if (creeps[role] && mustGenerate(creeps[role].desired, role)) {
-      if (typeof creeps[role].create === 'function') {
-        createCreep(role);
-        return; // done
-      }
+    if (creeps[role] && canGenerate(creeps[role].desired, role)) {
+      createCreep(role);
+      return; // done
     }
   }
   
@@ -77,7 +75,7 @@ module.exports = () => {
   if (Game.spawns.Spawn1.energyCapacity === Game.spawns.Spawn1.energy) {
     // create max amount of creeps
     for (let role in creeps) {
-      if (creeps[role] && mustGenerate(creeps[role].max, role)) {
+      if (creeps[role] && canGenerate(creeps[role].max, role)) {
         createCreep(role);
         return; // done
       }
