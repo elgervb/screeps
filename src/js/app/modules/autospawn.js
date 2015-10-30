@@ -9,32 +9,32 @@ module.exports = () => {
   // Generate these creeps
   let creeps = {
     harvester: {
-      desired: 2,
+      min: 2,
       max: 5,
-      body: [MOVE, WORK, CARRY]
+      body: [MOVE, WORK, CARRY, CARRY]
     },
     guard: {
-      desired: 2,
+      min: 2,
       max: 12,
       body: [MOVE, WORK, CARRY, ATTACK]
     },
-    ranger: {
-      desired: 2,
-      max: 6,
-      body: [MOVE, RANGED_ATTACK]
-    },
     healer: {
-      desired: 2,
+      min: 2,
       max: 4,
       body: [MOVE, HEAL]
     },
+    ranger: {
+      min: 2,
+      max: 6,
+      body: [MOVE, RANGED_ATTACK]
+    },
     builder: {
-      desired: 2,
+      min: 1,
       max: 2,
       body: [MOVE, WORK, CARRY]
     },
     test: {
-      desired: 0,
+      min: 0,
       max: 1,
       body: [MOVE, WORK, CARRY]
     }
@@ -63,9 +63,9 @@ module.exports = () => {
     }
   }
   
-  // create desired amount of creeps
+  // create min amount of creeps
   for (let role in creeps) {
-    if (creeps[role] && canGenerate(creeps[role].desired, role)) {
+    if (creeps[role] && canGenerate(creeps[role].min, role)) {
       createCreep(role);
       return; // done
     }
