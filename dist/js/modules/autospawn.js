@@ -1,4 +1,4 @@
-/* global Game, MOVE, WORK, CARRY, ATTACK */
+/* global Game, MOVE, WORK, CARRY, ATTACK, RANGED_ATTACK, HEAL, OK */
 'use strict';
 
 module.exports = function () {
@@ -12,30 +12,59 @@ module.exports = function () {
   var creeps = {
     harvester: {
       desired: 4,
-      max: 4,
+      max: 6,
+      body: [MOVE, WORK, CARRY],
       create: function create() {
-        Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, { role: 'harvester' });
+        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY]) === OK) {
+          return Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, { role: 'harvester' });
+        }
       }
     },
     builder: {
       desired: 2,
       max: 2,
+      body: [MOVE, WORK, CARRY],
       create: function create() {
-        Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, { role: 'builder' });
+        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY]) === OK) {
+          return Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, { role: 'builder' });
+        }
       }
     },
     guard: {
-      desired: 10,
+      desired: 6,
       max: 12,
+      body: [MOVE, WORK, CARRY, ATTACK],
       create: function create() {
-        Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY, ATTACK], null, { role: 'guard' });
+        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY, ATTACK]) === OK) {
+          return Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY, ATTACK], null, { role: 'guard' });
+        }
+      }
+    },
+    ranger: {
+      desired: 4,
+      max: 6,
+      create: function create() {
+        if (Game.spawns.Spawn1.canCreateCreep([MOVE, RANGED_ATTACK]) === OK) {
+          return Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY, RANGED_ATTACK], null, { role: 'ranger' });
+        }
+      }
+    },
+    healer: {
+      desired: 2,
+      max: 4,
+      create: function create() {
+        if (Game.spawns.Spawn1.canCreateCreep([MOVE, HEAL]) === OK) {
+          return Game.spawns.Spawn1.createCreep([MOVE, HEAL], null, { role: 'ranger' });
+        }
       }
     },
     test: {
       desired: 0,
       max: 1,
       create: function create() {
-        Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, { role: 'test' });
+        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY]) === OK) {
+          return Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, { role: 'test' });
+        }
       }
     }
   };
@@ -54,8 +83,9 @@ module.exports = function () {
 
   function createCreep(role) {
     if (typeof creeps[role].create === 'function') {
-      console.log('Spawn creep ' + role);
-      creeps[role].create();
+      if (creeps[role].create()) {
+        console.log('Spawn creep ' + role);
+      }
     }
   }
 

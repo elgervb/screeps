@@ -1,4 +1,4 @@
-/* global Game, MOVE, WORK, CARRY, ATTACK, RANGED_ATTACK, OK */
+/* global Game, MOVE, WORK, CARRY, ATTACK, RANGED_ATTACK, HEAL, OK */
 module.exports = () => {
   
   // only generate if larger than 200 energy
@@ -27,7 +27,7 @@ module.exports = () => {
       }
     },
     guard: {
-      desired: 10,
+      desired: 6,
       max: 12,
       create: () => {
         if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY, ATTACK]) === OK) {
@@ -39,8 +39,17 @@ module.exports = () => {
       desired: 4,
       max: 6,
       create: () => {
-        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY, RANGED_ATTACK]) === OK) {
+        if (Game.spawns.Spawn1.canCreateCreep([MOVE, RANGED_ATTACK]) === OK) {
           return Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY, RANGED_ATTACK], null, {role: 'ranger'});
+        }
+      }
+    },
+    healer: {
+      desired: 2,
+      max: 4,
+      create: () => {
+        if (Game.spawns.Spawn1.canCreateCreep([MOVE, HEAL]) === OK) {
+          return Game.spawns.Spawn1.createCreep([MOVE, HEAL], null, {role: 'ranger'});
         }
       }
     },

@@ -3,7 +3,9 @@
 
 var harvester = require('harvester');
 var guard = require('guard');
+var ranger = require('ranger');
 var builder = require('builder');
+var healer = require('healer');
 var test = require('test');
 var autospawn = require('autospawn');
 
@@ -25,6 +27,14 @@ module.exports.loop = function () {
 
       if (creep.memory.role === 'guard') {
         guard(creep);
+      }
+
+      if (creep.memory.role === 'ranger') {
+        ranger(creep);
+      }
+
+      if (creep.memory.role === 'healer') {
+        healer(creep);
       }
 
       if (creep.memory.role === 'test') {

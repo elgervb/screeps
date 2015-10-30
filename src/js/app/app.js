@@ -3,6 +3,7 @@ let harvester = require('harvester');
 let guard = require('guard');
 let ranger = require('ranger');
 let builder = require('builder');
+let healer = require('healer');
 let test = require('test');
 let autospawn = require('autospawn');
 
@@ -28,6 +29,10 @@ module.exports.loop = function () {
       
       if (creep.memory.role === 'ranger') {
         ranger(creep);
+      }
+      
+       if (creep.memory.role === 'healer') {
+        healer(creep);
       }
       
       if (creep.memory.role === 'test') {
