@@ -11,56 +11,32 @@ module.exports = () => {
     harvester: {
       desired: 4,
       max: 6,
-      create: () => {
-        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY]) === OK) {
-          return Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, {role: 'harvester'});
-        }
-      }
+      body: [MOVE, WORK, CARRY]
     },
     builder: {
       desired: 2,
       max: 2,
-      create: () => {
-        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY]) === OK) {
-          return Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, {role: 'builder'});
-        }
-      }
+      body: [MOVE, WORK, CARRY]
     },
     guard: {
       desired: 6,
       max: 12,
-      create: () => {
-        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY, ATTACK]) === OK) {
-          return Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY, ATTACK], null, {role: 'guard'});
-        }
-      }
+      body: [MOVE, WORK, CARRY, ATTACK]
     },
     ranger: {
       desired: 4,
       max: 6,
-      create: () => {
-        if (Game.spawns.Spawn1.canCreateCreep([MOVE, RANGED_ATTACK]) === OK) {
-          return Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY, RANGED_ATTACK], null, {role: 'ranger'});
-        }
-      }
+      body: [MOVE, RANGED_ATTACK]
     },
     healer: {
       desired: 2,
       max: 4,
-      create: () => {
-        if (Game.spawns.Spawn1.canCreateCreep([MOVE, HEAL]) === OK) {
-          return Game.spawns.Spawn1.createCreep([MOVE, HEAL], null, {role: 'ranger'});
-        }
-      }
+      body: [MOVE, HEAL]
     },
     test: {
       desired: 0,
       max: 1,
-      create: () => {
-        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY]) === OK) {
-          return Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, {role: 'test'});
-        }
-      }
+      body: [MOVE, WORK, CARRY]
     }
   };
   
@@ -77,9 +53,12 @@ module.exports = () => {
   }
   
   function createCreep(role) {
-    if (typeof creeps[role].create === 'function') {
-      if (creeps[role].create()) {
+    if (Game.spawns.Spawn1.canCreateCreep(creeps[role].body) === OK) {
+      let creep = Game.spawns.Spawn1.createCreep(creeps[role].body, null, {role});
+      if (typeof creep === 'string') {
         console.log(`Spawn creep ${role}`);
+      } else {
+        console.error(`Error creating creep with role ${role}. Error: ${creep}`);
       }
     }
   }
