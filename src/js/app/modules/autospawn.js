@@ -1,4 +1,4 @@
-/* global Game, MOVE, WORK, CARRY, ATTACK, RANGED_ATTACK */
+/* global Game, MOVE, WORK, CARRY, ATTACK, RANGED_ATTACK, OK */
 module.exports = () => {
   
   // only generate if larger than 200 energy
@@ -12,8 +12,8 @@ module.exports = () => {
       desired: 4,
       max: 6,
       create: () => {
-        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY])) {
-          Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, {role: 'harvester'});
+        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY]) === OK) {
+          return Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, {role: 'harvester'});
         }
       }
     },
@@ -21,8 +21,8 @@ module.exports = () => {
       desired: 2,
       max: 2,
       create: () => {
-        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY])) {
-          Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, {role: 'builder'});
+        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY]) === OK) {
+          return Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, {role: 'builder'});
         }
       }
     },
@@ -30,8 +30,8 @@ module.exports = () => {
       desired: 10,
       max: 12,
       create: () => {
-        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY, ATTACK])) {
-          Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY, ATTACK], null, {role: 'guard'});
+        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY, ATTACK]) === OK) {
+          return Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY, ATTACK], null, {role: 'guard'});
         }
       }
     },
@@ -39,8 +39,8 @@ module.exports = () => {
       desired: 4,
       max: 6,
       create: () => {
-        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY, RANGED_ATTACK])) {
-          Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY, RANGED_ATTACK], null, {role: 'ranger'});
+        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY, RANGED_ATTACK]) === OK) {
+          return Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY, RANGED_ATTACK], null, {role: 'ranger'});
         }
       }
     },
@@ -48,8 +48,8 @@ module.exports = () => {
       desired: 0,
       max: 1,
       create: () => {
-        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY])) {
-          Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, {role: 'test'});
+        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY]) === OK) {
+          return Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, {role: 'test'});
         }
       }
     }
@@ -69,8 +69,9 @@ module.exports = () => {
   
   function createCreep(role) {
     if (typeof creeps[role].create === 'function') {
-      console.log(`Spawn creep ${role}`);
-      creeps[role].create();
+      if (creeps[role].create()) {
+        console.log(`Spawn creep ${role}`);
+      }
     }
   }
   
