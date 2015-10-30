@@ -2,7 +2,7 @@
 module.exports = (creep) => {
 
   function needsHealing(other) {
-    return other.hits < other.maxHits;
+    return other.hits < other.hitsMax;
   }
 
   let creeps = creep.room.find(FIND_MY_CREEPS);
