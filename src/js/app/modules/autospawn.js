@@ -1,4 +1,4 @@
-/* global Game, MOVE, WORK, CARRY, ATTACK */
+/* global Game, MOVE, WORK, CARRY, ATTACK, RANGED_ATTACK */
 module.exports = () => {
   
   // only generate if larger than 200 energy
@@ -10,30 +10,47 @@ module.exports = () => {
   let creeps = {
     harvester: {
       desired: 4,
-      max: 4,
+      max: 6,
       create: () => {
-        Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, {role: 'harvester'});
+        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY])) {
+          Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, {role: 'harvester'});
+        }
       }
     },
     builder: {
       desired: 2,
       max: 2,
       create: () => {
-        Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, {role: 'builder'});
+        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY])) {
+          Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, {role: 'builder'});
+        }
       }
     },
     guard: {
       desired: 10,
       max: 12,
       create: () => {
-        Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY, ATTACK], null, {role: 'guard'});
+        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY, ATTACK])) {
+          Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY, ATTACK], null, {role: 'guard'});
+        }
+      }
+    },
+    ranger: {
+      desired: 4,
+      max: 6,
+      create: () => {
+        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY, RANGED_ATTACK])) {
+          Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY, RANGED_ATTACK], null, {role: 'ranger'});
+        }
       }
     },
     test: {
       desired: 0,
       max: 1,
       create: () => {
-        Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, {role: 'test'});
+        if (Game.spawns.Spawn1.canCreateCreep([MOVE, WORK, CARRY])) {
+          Game.spawns.Spawn1.createCreep([MOVE, WORK, CARRY], null, {role: 'test'});
+        }
       }
     }
   };
