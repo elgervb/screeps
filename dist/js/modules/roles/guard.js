@@ -2,35 +2,37 @@
 "use strict";
 
 module.exports = function (creep) {
-  var isFull = function isFull(me) {
-    return me.carry.energy && me.carry.energy === me.carry.carryCapacity;
+  var isFull = function isFull() {
+    return creep.carry.energy && creep.carry.energy === creep.carryCapacity;
   };
 
   var targets = creep.pos.findInRange(FIND_HOSTILE_CREEPS, 10);
-
   // attack !!
   if (targets.length) {
     var closest = creep.pos.findClosestByRange(targets);
     if (creep.attack(closest) === ERR_NOT_IN_RANGE) {
       creep.moveTo(closest);
     }
+    return;
   }
 
   // pickup energy dropped from enemies
-  if (!isFull(creep)) {
-    var target = creep.pos.findClosestByRange(FIND_DROPPED_ENERGY);
-    if (target) {
-      if (creep.pickup(target) === ERR_NOT_IN_RANGE) {
-        creep.moveTo(target);
+  if (!isFull()) {
+    var energy = creep.pos.findClosestByRange(FIND_DROPPED_ENERGY);
+    if (energy) {
+      if (creep.pickup(energy) === ERR_NOT_IN_RANGE) {
+        creep.moveTo(energy);
       }
+      return;
     }
   }
 
   // bring the energy back home
-  if (creep.carry.energy) {
+  if (creep.carry.energy > 0) {
     if (creep.transferEnergy(Game.spawns.Spawn1) === ERR_NOT_IN_RANGE) {
       creep.moveTo(Game.spawns.Spawn1);
     }
+    return;
   }
 
   // creep needs healing -> stay here
@@ -39,7 +41,7 @@ module.exports = function (creep) {
   }
 
   // move to flag and wait
-  if (Game.flags.Flag1) {
-    creep.moveTo(Game.flags.Flag1);
+  if (Game.flags.Defenders) {
+    creep.moveTo(Game.flags.Defenders);
   }
 };

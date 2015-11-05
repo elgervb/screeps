@@ -17,7 +17,7 @@ module.exports = function () {
     },
     guard: {
       min: 2,
-      max: 12,
+      max: 6,
       body: [MOVE, WORK, CARRY, ATTACK]
     },
     healer: {
@@ -38,7 +38,7 @@ module.exports = function () {
     test: {
       min: 0,
       max: 1,
-      body: [MOVE, WORK, CARRY]
+      body: [MOVE, WORK, CARRY, CARRY]
     }
   };
 
@@ -56,7 +56,7 @@ module.exports = function () {
 
   function createCreep(role) {
     if (Game.spawns.Spawn1.canCreateCreep(creeps[role].body) === OK) {
-      var creep = Game.spawns.Spawn1.createCreep(creeps[role].body, null, { role: role });
+      var creep = Game.spawns.Spawn1.createCreep(creeps[role].body, 'creep.' + role + '.' + Game.time, { role: role });
       if (typeof creep === 'string') {
         console.log('Spawn creep ' + role);
       } else {

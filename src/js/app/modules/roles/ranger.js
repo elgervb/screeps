@@ -7,9 +7,7 @@ module.exports = (creep) => {
     if (creep.rangedAttack(closest) === ERR_NOT_IN_RANGE) {
       creep.moveTo(closest);
     }
-  } else {
-    if (Game.flags.Flag1){
-      creep.moveTo(Game.flags.Flag1);
-    }
+  } else if (Game.flags.Defenders) {
+    creep.moveTo(Game.flags.Defenders);
   }
 };

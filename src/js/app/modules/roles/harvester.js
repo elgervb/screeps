@@ -10,7 +10,7 @@ module.exports = (creep) => {
   let logPerf = (task) => {
     let time = new Date().getTime() - start;
     if (time > 5) {
-      console.log(`${time} - ${Game.time} - Harvester ${task}`);
+      console.log(`${time}ms - ${Game.time} - Harvester ${task}`);
     }
   };
   
