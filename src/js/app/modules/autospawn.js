@@ -11,7 +11,7 @@ module.exports = () => {
     harvester: {
       min: 2,
       max: 5,
-      body: [MOVE, WORK, CARRY, CARRY]
+      body: [MOVE, MOVE, WORK, CARRY, CARRY]
     },
     guard: {
       min: 2,
@@ -36,7 +36,7 @@ module.exports = () => {
     test: {
       min: 0,
       max: 1,
-      body: [MOVE, WORK, CARRY]
+      body: [MOVE, MOVE, WORK, CARRY, CARRY]
     }
   };
   
