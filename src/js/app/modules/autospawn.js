@@ -15,7 +15,7 @@ module.exports = () => {
     },
     guard: {
       min: 2,
-      max: 12,
+      max: 6,
       body: [MOVE, WORK, CARRY, ATTACK]
     },
     healer: {
@@ -54,7 +54,7 @@ module.exports = () => {
   
   function createCreep(role) {
     if (Game.spawns.Spawn1.canCreateCreep(creeps[role].body) === OK) {
-      let creep = Game.spawns.Spawn1.createCreep(creeps[role].body, null, {role});
+      let creep = Game.spawns.Spawn1.createCreep(creeps[role].body, `creep.${role}.${Game.time}`, {role});
       if (typeof creep === 'string') {
         console.log(`Spawn creep ${role}`);
       } else {
