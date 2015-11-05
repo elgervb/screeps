@@ -12,6 +12,7 @@ module.exports = (creep) => {
     if (creep.attack(closest) === ERR_NOT_IN_RANGE) {
       creep.moveTo(closest);
     }
+    return;
   }
   
   // pickup energy dropped from enemies
@@ -21,6 +22,7 @@ module.exports = (creep) => {
       if (creep.pickup(target) === ERR_NOT_IN_RANGE) {
         creep.moveTo(target);
       }
+      return;
     }
   }
   
