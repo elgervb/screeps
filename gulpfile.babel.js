@@ -79,7 +79,7 @@ gulp.task('lint-js', () => {
  * This will also generete sourcemaps for the minified version. Depends on: docs-js
  */
 gulp.task('scripts-app', ['lint-js', 'docs-js'], () => {
-  let stripDebug = require('gulp-strip-debug');
+  // let stripDebug = require('gulp-strip-debug');
   let uglify = require('gulp-uglify');
   let babel = require('gulp-babel');
   let screeps = require('gulp-screeps');
@@ -88,7 +88,7 @@ gulp.task('scripts-app', ['lint-js', 'docs-js'], () => {
   return gulp.src(`${settings.src}js/app/**/*.js`)
   .pipe(plumber())
   .pipe(babel())
-  .pipe(gulpif(!argv.dev, stripDebug()))
+  // .pipe(gulpif(!argv.dev, stripDebug()))
   .pipe(gulpif(!argv.dev, uglify()))
   .pipe(size({showFiles: true}))
   .pipe(screeps(credentials));
