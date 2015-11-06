@@ -47,6 +47,8 @@ Temporary Items
 .vscode/launch.json
 npm-debug.log
 docs/*
+dist
 node_modules/*
 reports/*
 src/js/vendor/
+credentials.js
