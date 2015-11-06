@@ -1,23 +1,21 @@
-/* global Game, ERR_NOT_IN_RANGE, FIND_SOURCES_ACTIVE */
+/* global Game, Memory, ERR_NOT_IN_RANGE, FIND_SOURCES_ACTIVE */
 module.exports = (creep) => {
   
   let activeSource;
-  
   
   let isFull = () => {
     return creep.carry.energy === creep.carryCapacity;
   };
   
-  
   // setup creep memory 
-  if (!creep.memory.activeSourceID) {
+  if (!Memory.activeSourceID) {
     let source = creep.pos.findClosestByRange(FIND_SOURCES_ACTIVE);
     if (source) {
-      creep.memory.activeSourceID = source.id;
+      Memory.activeSourceID = source.id;
       activeSource = source;
     }
   } else {
-    activeSource = Game.getObjectById(creep.memory.activeSourceID);
+    activeSource = Game.getObjectById(Memory.activeSourceID);
   }
    
   // check if energy should be transferred back home 

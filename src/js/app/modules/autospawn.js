@@ -9,23 +9,23 @@ module.exports = () => {
   // Generate these creeps
   let creeps = {
     harvester: {
-      min: 2,
-      max: 5,
+      min: 1,
+      max: 2,
       body: [MOVE, WORK, CARRY, CARRY]
     },
     guard: {
-      min: 2,
-      max: 6,
+      min: 1,
+      max: 1,
       body: [MOVE, WORK, CARRY, ATTACK]
     },
     healer: {
-      min: 2,
-      max: 4,
+      min: 1,
+      max: 1,
       body: [MOVE, HEAL]
     },
     ranger: {
-      min: 2,
-      max: 6,
+      min: 1,
+      max: 1,
       body: [MOVE, RANGED_ATTACK]
     },
     builder: {
@@ -35,7 +35,7 @@ module.exports = () => {
     },
     test: {
       min: 0,
-      max: 1,
+      max: 0,
       body: [MOVE, WORK, CARRY, CARRY]
     }
   };
