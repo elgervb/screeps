@@ -3,16 +3,11 @@ module.exports = (creep) => {
   
   let activeSource;
   
-  let start = new Date().getTime();
+  
   let isFull = () => {
     return creep.carry.energy === creep.carryCapacity;
   };
-  let logPerf = (task) => {
-    let time = new Date().getTime() - start;
-    if (time > 5) {
-      console.log(`${time}ms - ${Game.time} - Harvester ${task}`);
-    }
-  };
+  
   
   // setup creep memory 
   if (!creep.memory.activeSourceID) {
@@ -31,7 +26,6 @@ module.exports = (creep) => {
     if (creep.transferEnergy(Game.spawns.Spawn1) === ERR_NOT_IN_RANGE) {
       creep.moveTo(Game.spawns.Spawn1);
     }
-    logPerf('transferEnergy');
     return;
   }
   
@@ -40,9 +34,6 @@ module.exports = (creep) => {
     if (creep.harvest(activeSource) === ERR_NOT_IN_RANGE) {
       creep.moveTo(activeSource);
     }
-    logPerf('harvest');
     return;
-  }
-  
-  logPerf('idle');
+  }  
 };
